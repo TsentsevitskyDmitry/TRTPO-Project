@@ -85,13 +85,13 @@
 
 ## 2.2 Интерфейс пользователя
 Диалог приветствия.  
-![Диалог приветствия](../../Images/Mockups/StartPage.PNG)  
+![Диалог приветствия](../../Images/Mockups/StartPage.png)  
 
 Диалог первичной настройки.  
-![Диалог первичной настройки](../../Images/Mockups/Configuring.PNG)  
+![Диалог первичной настройки](../../Images/Mockups/Configuring.png)  
 
 Диалог добавления напоминания.  
-![Диалог добавления напоминания](../../Images/Mockups/AddRemember.PNG)  
+![Диалог добавления напоминания](../../Images/Mockups/AddRemember.png)  
 
 <a name="user_specifications"/>
 
