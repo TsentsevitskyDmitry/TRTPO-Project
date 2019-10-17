@@ -63,7 +63,7 @@
 <a name="analogues"/>
 
 
-## 1.3 Аналоги
+## 1.3 Аналог
 
 ## [SkeddyBot](http://telegram.me/skeddybot)
 
@@ -74,7 +74,7 @@
    * Веб интерфейс
    
 #### Минусы:
-   * Закрытый исходный код   
+   * Неудобное управление   
 
 <a name="user_requirements"/>
 
