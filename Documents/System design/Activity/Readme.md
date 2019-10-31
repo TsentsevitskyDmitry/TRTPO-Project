@@ -13,7 +13,7 @@
 <a name="2"/>
 
 # 2. Добавить текстовое напомнинаие
-![Диаграмма активностей 2](../../../Images/System%20design/Action/ActionAdd.png)
+![Диаграмма активностей 2](../../../Images/System%20design/Action/ActionAddNotifi.png)
 
 <a name="3"/>
 
