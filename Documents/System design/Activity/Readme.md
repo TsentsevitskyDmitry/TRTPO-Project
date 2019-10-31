@@ -18,4 +18,4 @@
 <a name="3"/>
 
 # 3. Отложить напоминание
-![Диаграмма активностей 3](../../../Images/System%20design/Action/ActionLate.png)
+![Диаграмма активностей 3](../../../Images/System%20design/Action/ActionDelay.png)
