@@ -13,7 +13,7 @@
 <a name="2"/>
 
 # 2. Добавить текстовое напомнинаие
-![Диаграмма состояния 2](../../../Images/System%20design/State/StateNotifi.png)
+![Диаграмма состояния 2](../../../Images/System%20design/State/StateAdd.png)
 
 <a name="3"/>
 
