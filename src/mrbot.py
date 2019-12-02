@@ -48,7 +48,7 @@ def start_callback(update, context):
 
 def help_callback(update, context):
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+    update.message.reply_text('Usge: Напомни *когда* *что*')
 
 def error_callback(update, context):
     """Log Errors caused by Updates."""

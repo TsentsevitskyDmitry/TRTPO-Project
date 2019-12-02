@@ -6,7 +6,7 @@ class DialogProcessor:
 		self.__database = NotiDatabase();
 
     def prepare_values():
-    	return {'tstart':0, 'tent': 0}
+    	return {'tstart':0, 'tend': 0}
 
 	def process(self, content, chat_id):
 		current_context = prepare_values();
@@ -14,8 +14,9 @@ class DialogProcessor:
 			current_context = self.__open_dialogs[chat_id];
 
 		parser = Parser();
-		parser.parse_time(current_context)
-		parser.parse_payload(current_context)
+		content = content.lower();
+		parser.parse_time(content, current_context)
+		parser.parse_payload(content, current_context)
 
 		if('error' in current_context):
 			return current_context['error']
