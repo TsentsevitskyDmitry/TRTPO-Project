@@ -1,7 +1,9 @@
 import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from datetime import datetime
+from dprocessor import DialogProcessor
 
+dprocessor = DialogProcessor();
 
 def start(token):
     # Enable logging
@@ -37,7 +39,8 @@ def start(token):
 
 def reply_callback(update, context):
     """Answer user message."""
-    update.message.reply_text(update.message.text)
+    reply = dprocessor.process(update.message.text, update.effective_chat.id);
+    update.message.reply_text(reply)
 
 def start_callback(update, context):
     """Send a message when the command /start is issued."""
