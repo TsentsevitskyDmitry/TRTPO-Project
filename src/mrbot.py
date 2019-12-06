@@ -21,9 +21,11 @@ def start(token):
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start_callback))
     dp.add_handler(CommandHandler("help", help_callback))
+    dp.add_handler(CommandHandler("show", help_callback))
 
     # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text | Filters.video | Filters.photo | Filters.document, reply_callback))
+    dp.add_handler(MessageHandler(Filters.text | Filters.video | Filters.photo | Filters.document, reply_text_callback))
+    dp.add_handler(MessageHandler(Filters.photo | Filters.document, reply_document_callback))
 
     # log all errors
     dp.add_error_handler(error_callback)
@@ -37,10 +39,14 @@ def start(token):
     updater.idle()
 
 
-def reply_callback(update, context):
+def reply_text_callback(update, context):
     """Answer user message."""
-    reply = dprocessor.process(update.message.text, update.effective_chat.id);
+    reply = dprocessor.process_text(update.message.text, update.effective_chat.id);
     update.message.reply_text(reply)
+
+def reply_document_callback(update, context):
+    """Answer user message."""
+    update.message.reply_text("Sorry, not implemented")
 
 def start_callback(update, context):
     """Send a message when the command /start is issued."""

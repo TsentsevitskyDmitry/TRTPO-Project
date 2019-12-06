@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime, time, timedelta  
 
 class Parser:
 
@@ -8,7 +8,7 @@ class Parser:
 		self.__keyword = 'напомни'
 		self.__err_usage = "Usage: Напомни *что* *когда*"
 		self.__digits_worlds = {'один': 1, 'два': 2, 'три': 3, 'четыре': 4, 'пять': 5, 'шесть': 6, 'семь': 7, 'восемь': 8, 'девять': 9, 'десять': 10}
-		self.__dimention_worlds = {'час': 'hour', 'мин': 'min', 'ден': 'day', 'нед': 'week'}
+		self.__dimention_worlds = {'час': 'hour', 'мин': 'min', 'ден': 'day', 'дня': 'day', 'нед': 'week'}
 
 	def parse_time(self, instring, context):
 		if (self.__keyword in instring):
@@ -17,12 +17,13 @@ class Parser:
 				self.parse_relative(instring, context)
 			elif (any(elem in instring for elem in self.__absolute_keys)):
 				self.parse_absolute(instring, context)
-			elif (self.contain_native(instring)):
-				self.parse_native(instring, context)
 			else:
 				context['error'] = self.__err_usage
 		else:
-			context['error'] = self.__err_usage
+			if (self.contain_native(instring)):
+				self.parse_native(instring, context)
+			else:
+				context['error'] = self.__err_usage
 
 	def parse_regular_digit(self, data, structure):
 		try:
@@ -74,11 +75,14 @@ class Parser:
 		if ('nope' in structure.values()):
 			context['error'] = "Не указано когда!"
 		else:
-			context['mins'] = self.ismin(structure) * structure['digit'];
-			context['hours'] = self.ishour(structure) * structure['digit'];
-			context['days'] = self.isday(structure) * structure['digit'];
-			context['days'] = self.isweek(structure) * structure['digit'] * 7;
+			rel_minutes = self.ismin(structure) * structure['digit'];
+			rel_hours = self.ishour(structure) * structure['digit'];
+			rel_deys = (self.isday(structure) + self.isweek(structure) * 7) * structure['digit'];
+
+			ttime = datetime.now() +  timedelta(days= rel_deys, hours=rel_hours, minutes=rel_minutes)
+			context['time'] = ttime.strftime("%m/%d, %H:%M")
 			context['tend'] = instring.find(indata[parse_index]) + len(indata[parse_index]) + 1
+
 
 
 	def parse_day(self, data, structure):
@@ -97,8 +101,6 @@ class Parser:
 		time = 	datetime.strptime(data, '%H:%M').time()
 		structure['ttime'] = time
 
-
-
 	def parse_absolute(self, instring, context):
 		# ex: напонги завтра в 8
 		indata = instring.split(' ')
@@ -111,8 +113,10 @@ class Parser:
 			self.parse_complex_time(indata[parse_index], structure)
 
 		context['tend'] = instring.find(indata[parse_index]) + len(indata[parse_index]) + 1
-		print(structure)
-		context['time'] = datetime.now() + structure['ttime'] 
+
+		now = datetime.now()
+		ttime = datetime(now.year, now.month, now.day + structure['tday'], hour=structure['ttime'].hour, minute=structure['ttime'].minute)
+		context['time'] = ttime.strftime("%m/%d, %H:%M")
 
 		if ('error' in structure):
 			context['error'] = "Непонятное чет время"
@@ -123,11 +127,12 @@ class Parser:
 	def parse_native(self, instring, context):
 		context['error'] = "Not implemented native"
 
-	def parse_payload(self, instring, context):
+	def parse_text_payload(self, instring, context):
 		dstart = context['tend']	
 		res = instring[dstart:]
-
-		if (len(res) == 0 and 'payload' not in context or context['tend'] == 0):
+		if ('error' in context):
+			return
+		elif (len(res) == 0 and 'payload' not in context or context['tend'] == 0):
 			context['error'] = self.__err_usage
 		else:
 			context['payload'] = res;
