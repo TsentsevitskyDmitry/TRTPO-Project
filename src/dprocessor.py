@@ -1,10 +1,12 @@
 from dparser import Parser 
 from TextNotofocationProcessor import NotificationsORM
+from datetime import datetime
+from log import Log
 
 class DialogProcessor:
 	def __init__(self):
 		self.__open_dialogs = {};
-		self.__orm = NotificationsORM();
+		self.__notifications = NotificationsORM();
 
 	def prepare_values(self):
 		return {'tstart':0, 'tend': 0}
@@ -23,10 +25,13 @@ class DialogProcessor:
 		if('error' in current_context):
 			return current_context['error']
 
-		preview = self.add_notification(current_context)
+		preview = self.add_notification(current_context, chat_id)
 		current_context.pop(chat_id, None)
 		return preview
 
-	def add_notification(self, context):
-		self.__orm.add(context)
-		return "Created '" + context['payload'] + "' at " + context['time'] 
+	def add_notification(self, context, chat_id):
+		self.__notifications.add(context, chat_id)
+		preview = "Created '" + context['payload'] + "' at " + str(context['time']) 
+		Log(preview);
+		# print("Log: %s - %s" %(datetime.now(), preview))
+		return preview

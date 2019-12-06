@@ -6,8 +6,8 @@ class Parser:
 		self.__relative_keys = ['через', 'спустя']
 		self.__absolute_keys = ['сегодня', 'завтра', 'послезавтра']
 		self.__keyword = 'напомни'
-		self.__err_usage = "Usage: Напомни *что* *когда*"
-		self.__digits_worlds = {'один': 1, 'два': 2, 'три': 3, 'четыре': 4, 'пять': 5, 'шесть': 6, 'семь': 7, 'восемь': 8, 'девять': 9, 'десять': 10}
+		self.__err_usage = "Usage: Напомни *когда* *что*"
+		self.__digits_worlds = {'один': 1, 'одну': 1, 'две' : 2, 'два': 2, 'три': 3, 'четыре': 4, 'пять': 5, 'шесть': 6, 'семь': 7, 'восемь': 8, 'девять': 9, 'десять': 10}
 		self.__dimention_worlds = {'час': 'hour', 'мин': 'min', 'ден': 'day', 'дня': 'day', 'нед': 'week'}
 
 	def parse_time(self, instring, context):
@@ -30,6 +30,7 @@ class Parser:
 			structure['digit'] = int(data)
 			return True
 		except ValueError:
+			print(data)
 			if (data in self.__digits_worlds):
 				structure['digit'] =  self.__digits_worlds[data]
 				return True
@@ -80,7 +81,7 @@ class Parser:
 			rel_deys = (self.isday(structure) + self.isweek(structure) * 7) * structure['digit'];
 
 			ttime = datetime.now() +  timedelta(days= rel_deys, hours=rel_hours, minutes=rel_minutes)
-			context['time'] = ttime.strftime("%m/%d, %H:%M")
+			context['time'] = ttime
 			context['tend'] = instring.find(indata[parse_index]) + len(indata[parse_index]) + 1
 
 
@@ -102,10 +103,10 @@ class Parser:
 		structure['ttime'] = time
 
 	def parse_absolute(self, instring, context):
-		# ex: напонги завтра в 8
+		# ex: напомги завтра в 8
 		indata = instring.split(' ')
-		structure = {'tday': 0, 'ttime': time()}
-		parse_index = indata.index(self.__keyword) + 1
+		structure = {'tday': 0, 'ttime': time(8, 0)}
+		parse_index = indata.index(self.__keyword, 0) + 1
 
 		isday = self.parse_day(indata[parse_index], structure);
 		if(isday and ((parse_index + 1) < len(indata)) and ('в' == indata[parse_index + 1])):
@@ -115,8 +116,8 @@ class Parser:
 		context['tend'] = instring.find(indata[parse_index]) + len(indata[parse_index]) + 1
 
 		now = datetime.now()
-		ttime = datetime(now.year, now.month, now.day + structure['tday'], hour=structure['ttime'].hour, minute=structure['ttime'].minute)
-		context['time'] = ttime.strftime("%m/%d, %H:%M")
+		ttime = datetime(now.year, now.month, now.day + structure['tday'], hour=structure['ttime'].hour, minute=structure['ttime'].minute, second=0)
+		context['time'] = ttime
 
 		if ('error' in structure):
 			context['error'] = "Непонятное чет время"
