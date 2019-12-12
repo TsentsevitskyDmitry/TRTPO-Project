@@ -71,7 +71,7 @@ def help_callback(update, context):
 
 def error_callback(update, context):
     """Log Errors caused by Updates."""
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
+    Log('Update "%s" caused error "%s"'%(update, context.error))
 
 def check():
     remindings = notifications.get_all(datetime.now())
