@@ -5,6 +5,6 @@
 |Delete new Notifications from db|Call delete_instance() method of Notification instance|Deleted row in database|Deleted row in database| + |
 |Help echo|Send '/help' message to the bot |Quick help with basic commands|Quick help with basic commands|  +|
 |Show active notifications echo|Send '/show' message to the bot |List of pending notifications|List of pending notifications| +  |
-|Parsing relative timelable|Send 'напочни через 1 час поесть' like message to the bot |Creating new notificaton with: [time: current time + 1 hour, content: 'поесть'|For some inputs bot print Usage string| -|
-|Parsing absolute timelable|Send 'напочни завтрв в 8 проверить почту' like message to the bot |Creating new notificaton with: [time: next_day.08.00, content: 'поесть'|For some inputs bot print Usage string| -|
+|Parsing relative timelable|Send 'РЅР°РїРѕС‡РЅРё С‡РµСЂРµР· 1 С‡Р°СЃ РїРѕРµСЃС‚СЊ' like message to the bot |Creating new notificaton with: [time: current time + 1 hour, content: 'РїРѕРµСЃС‚СЊ'|For some inputs bot print Usage string| -|
+|Parsing absolute timelable|Send 'РЅР°РїРѕС‡РЅРё Р·Р°РІС‚СЂРІ РІ 8 РїСЂРѕРІРµСЂРёС‚СЊ РїРѕС‡С‚Сѓ' like message to the bot |Creating new notificaton with: [time: next_day.08.00, content: 'РїРѕРµСЃС‚СЊ'|For some inputs bot print Usage string| -|
 |Executing payload from user messages|Send Usage-like message to the bot |Create new Notification|When parsing timelable passed, this case also created new notification| +|
